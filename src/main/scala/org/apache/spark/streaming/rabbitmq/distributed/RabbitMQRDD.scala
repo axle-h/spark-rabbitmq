@@ -19,13 +19,12 @@ import akka.actor.ActorSystem
 import com.rabbitmq.client.ConsumerCancelledException
 import com.rabbitmq.client.QueueingConsumer.Delivery
 import com.typesafe.config.ConfigFactory
-import org.apache.spark.internal.Logging
 import org.apache.spark.partial.{BoundedDouble, CountEvaluator, PartialResult}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.streaming.rabbitmq.consumer.Consumer
 import org.apache.spark.streaming.rabbitmq.consumer.Consumer._
-import org.apache.spark.util.{LongAccumulator, NextIterator, Utils}
-import org.apache.spark.{Partition, SparkContext, SparkException, TaskContext}
+import org.apache.spark.util.{NextIterator, Utils}
+import org.apache.spark._
 
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._
@@ -37,7 +36,7 @@ class RabbitMQRDD[R: ClassTag](
                                 @transient sc: SparkContext,
                                 distributedKeys: Seq[RabbitMQDistributedKey],
                                 rabbitMQParams: Map[String, String],
-                                val countAccumulator: LongAccumulator,
+                                val countAccumulator: Accumulator[Long],
                                 messageHandler: Delivery => R
                               ) extends RDD[R](sc, Nil) with Logging {
 
@@ -267,7 +266,7 @@ object RabbitMQRDD extends Logging {
   def apply[R: ClassTag](sc: SparkContext,
                          distributedKeys: Seq[RabbitMQDistributedKey],
                          rabbitMQParams: Map[String, String],
-                         countAccumulator: LongAccumulator,
+                         countAccumulator: Accumulator[Long],
                          messageHandler: Delivery => R
                         ): RabbitMQRDD[R] = {
 

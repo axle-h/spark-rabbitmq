@@ -82,7 +82,7 @@ class RabbitMQDistributedConsumerIT extends TemporalDataSuite {
           }
       )
 
-      val totalEvents = ssc.sparkContext.longAccumulator("Number of events received")
+      val totalEvents = ssc.sparkContext.accumulator(0L, "Number of events received")
 
       // Start up the receiver.
       distributedStream.start()

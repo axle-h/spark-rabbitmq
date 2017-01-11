@@ -19,8 +19,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 import com.rabbitmq.client.QueueingConsumer.Delivery
 import com.rabbitmq.client.{Connection, ConnectionFactory, _}
-import org.apache.spark.SparkException
-import org.apache.spark.internal.Logging
+import org.apache.spark.{Logging, SparkException}
 import org.apache.spark.streaming.rabbitmq.ConfigParameters._
 import org.apache.spark.streaming.rabbitmq.models.{ExchangeAndRouting, QueueConnectionOpts}
 
