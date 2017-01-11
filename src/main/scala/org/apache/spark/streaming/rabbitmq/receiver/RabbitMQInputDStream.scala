@@ -29,7 +29,6 @@ import org.apache.spark.streaming.receiver.Receiver
 import scala.reflect.ClassTag
 import scala.util._
 
-private[rabbitmq]
 class RabbitMQInputDStream[R: ClassTag](
                                          @transient ssc_ : StreamingContext,
                                          params: Map[String, String],
@@ -45,7 +44,6 @@ class RabbitMQInputDStream[R: ClassTag](
   }
 }
 
-private[rabbitmq]
 class RabbitMQReceiver[R: ClassTag](
                                      params: Map[String, String],
                                      storageLevel: StorageLevel,
